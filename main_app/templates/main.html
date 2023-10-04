@@ -1,0 +1,54 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Known Vehicle Management!</h1>
+<p>Vehicle Information!</p>
+    {% crispy form %}
+{%if rtsp_url_id %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 offset-lg-2">
+            <!-- <h3 class="mt-5">Suraksha Vyuh</h3> -->
+            <!-- Replace the URL below with your actual video feed URL -->
+            <img id="video-frame" src="{% url 'mask_feed' rtsp_url_id %}" height="400px" width="600px"></img>
+            <p id="detected-word">Detected Word: </p> <!-- Add an HTML element for the detected word -->
+        </div>
+    </div>
+</div>
+{%endif%}
+<form>
+    <label>Enter New Vehicle No.</label>
+    <input type="text" placeholder="Enter vehicle no.">
+    <button type="submit" class="btn">Submit</button>
+    <label>Remove Vehicle No.</label>
+    <input type="text" placeholder="Enter vehicle no.">
+    <button type="submit" class="btn">Submit</button>
+
+    <button type="submit" class="btn">All Known Vehicles</button>
+    <button type="submit" class="btn">Vehicle Log</button>
+</form>
+
+{%if rtsp_url_id %}
+<script>
+    const img = document.getElementById('video-frame');
+    const word = document.getElementById('detected-word');
+
+    const eventSource = new EventSource("{% url 'mask_feed' rtsp_url_id%}");
+
+    eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        img.src = 'data:image/jpeg;base64,' + data.image;
+        word.innerText = 'Detected Word: ' + data.word;
+    };
+
+    eventSource.onerror = (error) => {
+        console.error('EventSource failed:', error);
+        eventSource.close();
+    };
+</script>
+{%endif%}
+
+</body>
+</html>

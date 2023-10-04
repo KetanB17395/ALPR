@@ -1,0 +1,43 @@
+<!-- mask_feed.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mask Feed</title>
+</head>
+<body>
+    <h1>Vehicle Feed</h1>
+
+    <!-- Include the CSRF token in a hidden form field -->
+    <form id="csrf-form" style="display: none;">
+        {% csrf_token %}
+    </form>
+
+    <div>
+        <img id="video-frame" src="" height="400px" width="600px">
+        <p id="detected-word">Detected Word: </p>
+    </div>
+
+    <script>
+        const img = document.getElementById('video-frame');
+        const word = document.getElementById('detected-word');
+        const csrfTokenInput = document.getElementById('csrf-token-input');
+
+        // Get the CSRF token from the hidden form field
+        const csrfToken = csrfTokenInput.value;
+
+        const eventSource = new EventSource("{% url 'mask_feed' %}");
+
+        eventSource.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            img.src = 'data:image/jpeg;base64,' + data.image;
+            word.innerText = 'Detected Word: ' + data.word;
+        };
+
+        eventSource.onerror = (error) => {
+            console.error('EventSource failed:', error);
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>

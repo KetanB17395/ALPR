@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Known Vehile Managment !</h1>
+<p>Vehicle Information!</p>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 offset-lg-2">
+            <h3 class="mt-5">Suraksha Vyuh</h3>
+            <!-- Replace the URL below with your actual video feed URL -->
+            <img src="{% url 'mask_feed' %}" height="400px" width="600px"></img>
+        </div>
+    </div>
+</div>
+
+
+<form>
+
+    <label>Enter New Vehicle No.</label>
+    <input type="text" placeholder="Enter behicle no.">
+    <button type="submit" class="btn">Submit</button>
+    <label>Remove Vehicle No.</label>
+    <input type="text" placeholder="Enter behicle no.">
+    <button type="submit" class="btn">Submit</button>
+
+    <button type="submit" class="btn">AllKnownVehicles</button>
+    <button type="submit" class="btn">Vehiclelog</button>
+
+</form>
+<script>
+    function updateImage() {
+        const img = document.getElementById('video-frame');
+        img.src = '{% url "mask_feed" %}';
+    }
+
+    // Call the updateImage function to start streaming
+    updateImage();
+</script>
+</body>
+</html>
