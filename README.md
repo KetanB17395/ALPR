@@ -8,3 +8,6 @@ python3 manage.py runserver
 
 
 you will get UI on 8000 port 
+
+Dockerfile and docker-compose file ignore it
+
