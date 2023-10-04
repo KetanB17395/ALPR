@@ -1,0 +1,6 @@
+opencv-python>=4.6.0.66
+django==4.2.5
+django-crispy-forms==2.0
+crispy-bootstrap4==2022.1
+paddlepaddle==2.5.1
+paddleocr==2.7.0.3
